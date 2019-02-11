@@ -1,11 +1,11 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, IntegerField, SelectField
 from wtforms.validators import DataRequired
 
 __author__ = 'kot'
 
 
-class AddTaskForm(Form):
+class AddTaskForm(FlaskForm):
     task_id = IntegerField()
     name = StringField('Task Nmae', validators=[DataRequired()])
     due_date = DateField('Date Due (mm/dd/yyyy)', validators=[DataRequired()], format='%m/%d/%Y')
