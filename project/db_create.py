@@ -1,9 +1,9 @@
-from views import db
-from models import Task
 from datetime import date
 
-__author__ = 'kot'
+from models import Task
+from views import db
 
+__author__ = 'kot'
 
 # create the database and the db table
 db.create_all()
