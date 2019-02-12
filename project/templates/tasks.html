@@ -11,31 +11,31 @@
     <div class="input-group">
         {{ form.name(placeholder="name") }}
         {% if form.name.errors %}
-            <span class="error">
+            <div class="error">
                 {% for error in form.name.errors %}
                     {{ error }}
                 {% endfor %}
-            </span>
+            </div>
         {% endif %}
     </div>
     <div class="input-group">
         {{ form.due_date(placeholder="due date") }}
         {% if form.due_date.errors %}
-            <span class="error">
+            <div class="error">
                 {% for error in form.due_date.errors %}
                     {{ error }}
                 {% endfor %}
-            </span>
+            </div>
         {% endif %}
     </div>
     <div class="input-group">
         {{ form.priority(placeholder="priority") }}
         {% if form.priority.errors %}
-            <span class="error">
+            <div class="error">
                 {% for error in form.priority.errors %}
                     {{ error }}
                 {% endfor %}
-            </span>
+            </div>
         {% endif %}
     </div>
     <div class="input-group">
@@ -74,9 +74,9 @@
       {% endfor %}
     </table>
   </div>
-  <br>
-  <br>
 </div>
+<br>
+<br>
 <div class="entries">
   <h2>Closed tasks:</h2>
   <div class="datagrid">
