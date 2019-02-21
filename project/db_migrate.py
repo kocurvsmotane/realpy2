@@ -1,5 +1,4 @@
 import sqlite3
-from datetime import datetime
 
 from _config import DATABASE_PATH
 from views import db
@@ -10,19 +9,19 @@ with sqlite3.connect(DATABASE_PATH) as conn:
     c = conn.cursor()
 
     # temporarily change the name of tasks table
-    c.execute("""ALTER TABLE tasks RENAME TO old_tasks""")
+    c.execute("""ALTER TABLE users RENAME TO old_users""")
 
     # recreate a new tasks table with updated schema
     db.create_all()
 
     # retrieve data from old_tasks table
-    c.execute("""SELECT  name, due_date, priority, status FROM old_tasks ORDER BY task_id ASC""")
+    c.execute("""SELECT name, email, password FROM old_users ORDER BY id ASC""")
 
     # save all rows as a list of tuples; set posted_date to now and user_id to 1
-    data = [(r[0], r[1], r[2], r[3], datetime.now(), 1) for r in c.fetchall()]
+    data = [(r[0], r[1], r[2], 'user') for r in c.fetchall()]
 
     # insert data to tasks table
-    c.executemany("""INSERT INTO tasks (name, due_date, priority, status, posted_date, user_id) VALUES (?, ?, ?, ?, ?, ?)""", data)
+    c.executemany("""INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)""", data)
 
     # delete old_tasks table
-    c.execute("""DROP TABLE old_tasks""")
+    c.execute("""DROP TABLE old_users""")
