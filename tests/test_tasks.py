@@ -2,9 +2,9 @@ import os
 import unittest
 from datetime import date
 
-from _config import basedir
-from views import app, db
-from models import Task, User
+from project._config import basedir
+from project import app, db
+from project.models import Task, User
 
 TEST_DB = 'test.db'
 

@@ -1,7 +1,7 @@
 import sqlite3
 
-from _config import DATABASE_PATH
-from views import db
+from project._config import DATABASE_PATH
+from project import db
 
 __author__ = 'kot'
 

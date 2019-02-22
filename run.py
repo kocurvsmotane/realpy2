@@ -1,4 +1,4 @@
-from views import app
+from project import app
 
 __author__ = 'kot'
 

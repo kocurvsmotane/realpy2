@@ -1,19 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, IntegerField, SelectField, PasswordField
+from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired, Length, EqualTo, Email
 
 __author__ = 'kot'
-
-
-class AddTaskForm(FlaskForm):
-    task_id = IntegerField()
-    name = StringField('Task Name', validators=[DataRequired()])
-    due_date = DateField('Date Due (mm/dd/yyyy)', validators=[DataRequired()], format='%m/%d/%Y')
-    priority = SelectField('Priority', validators=[DataRequired()], choices=[
-        ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'),
-        ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10'), ('11', '11'), ('12', '12')
-    ])
-    status = IntegerField('Status')
 
 
 class RegisterForm(FlaskForm):

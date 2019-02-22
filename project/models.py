@@ -1,6 +1,6 @@
 import datetime
 
-from views import db
+from project import db
 
 __author__ = 'kot'
 
