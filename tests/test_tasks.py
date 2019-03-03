@@ -156,6 +156,46 @@ class TasksTests(unittest.TestCase):
         for task in tasks:
             self.assertEqual(repr(task), '<Task Check email>')
 
+    def test_users_cannot_see_task_modify_links_for_tasks_not_created_by_them(self):
+        self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        self.login('Michael', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_task()
+        self.logout()
+        self.register('Ferdyshenko', 'ferd@ysh.com', 'ferdys', 'ferdys')
+        self.login('Ferdyshenko', 'ferdys')
+        response = self.app.get('tasks/', follow_redirects=True)
+        self.assertNotIn(b'Mark as complete', response.data)
+        self.assertNotIn(b'Delete', response.data)
+
+    def test_users_can_see_task_modify_links_for_tasks_created_by_them(self):
+        self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        self.login('Michael', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_task()
+        self.logout()
+        self.register('Ferdyshenko', 'ferd@ysh.com', 'ferdys', 'ferdys')
+        self.login('Ferdyshenko', 'ferdys')
+        self.app.get('tasks/', follow_redirects=True)
+        response = self.create_task()
+        self.assertIn(b'complete/2/', response.data)
+        self.assertIn(b'delete/2/', response.data)
+
+    def test_admins_can_see_task_modify_links_for_all_tasks(self):
+        self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        self.login('Michael', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_task()
+        self.logout()
+        self.create_admin_user()
+        self.login('Norris', 'nor')
+        self.app.get('tasks/', follow_redirects=True)
+        response = self.create_task()
+        self.assertIn(b'complete/1/', response.data)
+        self.assertIn(b'delete/1/', response.data)
+        self.assertIn(b'complete/2/', response.data)
+        self.assertIn(b'delete/2/', response.data)
+
 
 if __name__ == '__main__':
     unittest.main()
