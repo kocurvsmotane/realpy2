@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from project.models import User
 from project.users.forms import LoginForm, RegisterForm
 
-from project import db
+from project import db, bcrypt
 
 __author__ = 'kot'
 
@@ -37,7 +37,7 @@ def login():
     if request.method == 'POST':
         if form.validate_on_submit():
             user = User.query.filter_by(name=request.form['name']).first()
-            if user is not None and user.password == request.form['password']:
+            if user is not None and bcrypt.check_password_hash(user.password, request.form['password']):
                 session['logged_in'] = True
                 session['user_id'] = user.id
                 session['role'] = user.role
@@ -66,7 +66,7 @@ def register():
     form = RegisterForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            new_user = User(form.name.data, form.email.data, form.password.data)
+            new_user = User(form.name.data, form.email.data, bcrypt.generate_password_hash(form.password.data))
             try:
                 db.session.add(new_user)
                 db.session.commit()

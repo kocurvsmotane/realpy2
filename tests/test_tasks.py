@@ -3,7 +3,7 @@ import unittest
 from datetime import date
 
 from project._config import basedir
-from project import app, db
+from project import app, db, bcrypt
 from project.models import Task, User
 
 TEST_DB = 'test.db'
@@ -53,7 +53,7 @@ class TasksTests(unittest.TestCase):
         ), follow_redirects=True)
 
     def create_admin_user(self):
-        db.session.add(User('Norris', 'norris@superpower.eu', 'nor', 'admin'))
+        db.session.add(User('Norris', 'norris@superpower.eu', bcrypt.generate_password_hash('nor'), 'admin'))
         db.session.commit()
 
     def test_logged_in_users_can_access_tasks_page(self):

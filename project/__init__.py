@@ -1,10 +1,12 @@
 from flask import Flask
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 __author__ = 'kot'
 
 app = Flask(__name__)
 app.config.from_pyfile('_config.py')
+bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
 from project.users.views import users_blueprint
