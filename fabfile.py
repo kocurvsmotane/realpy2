@@ -17,7 +17,7 @@ def commit(c):
 
 @task
 def push(c):
-    c.run("git push origin master")
+    c.run("ssh-agent bash -c 'ssh-add ~/.ssh/github; git push origin master'")
 
 
 @task
