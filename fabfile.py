@@ -3,6 +3,8 @@ import re
 
 from fabric import task
 from invoke import Responder
+from invoke.exceptions import Exit
+from invocations.console import confirm
 
 SSH_PASS = ''
 
@@ -17,7 +19,9 @@ def get_ssh_pass_resp():
 @task
 def test(c):
     with c.prefix("source env/bin/activate"):
-        c.run("nosetests -v")
+        result = c.run("nosetests -v", warn=True)
+        if not result.ok and not confirm("Tests failed. Continue?"):
+            raise Exit()
 
 
 @task
@@ -38,7 +42,33 @@ def pull(c):
 
 
 @task
+def heroku(c):
+    c.run("git push heroku master")
+
+
+@task
+def heroku_test(c):
+    c.run("heroku run nosetests -v")
+
+
+@task
 def prepare(c):
     test(c)
     commit(c)
     push(c)
+
+
+@task
+def deploy(c):
+    pull(c)
+    test(c)
+    commit(c)
+    heroku(c)
+    heroku_test(c)
+
+
+# for debugging
+if __name__ == "__main__":
+    from invoke import Context, Config
+    con = Context(config=Config())
+    test(con)
