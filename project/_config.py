@@ -16,3 +16,4 @@ DATABASE_PATH = os.path.join(basedir, DATABASE)
 
 # database uri
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE_PATH  # os.environ.get('DATABASE_URL', 'sqlite:///' + DATABASE_PATH)
+SQLALCHEMY_TRACK_MODIFICATIONS = False

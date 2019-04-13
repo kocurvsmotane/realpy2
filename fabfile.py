@@ -1,7 +1,8 @@
+import getpass
+import re
+
 from fabric import task
 from invoke import Responder
-import getpass
-
 
 SSH_PASS = ''
 
@@ -22,7 +23,8 @@ def test(c):
 @task
 def commit(c):
     message = input("Enter a git commit message: ")
-    c.run(f"git add . && git commit -am '{message}'")
+    command = "git add . && git commit -am \"{}\"".format(re.escape(message))
+    c.run(command)
 
 
 @task
