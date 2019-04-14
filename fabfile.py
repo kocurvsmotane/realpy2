@@ -27,7 +27,7 @@ def test(c):
 @task
 def commit(c):
     message = input("Enter a git commit message: ")
-    command = "git add . && git commit -am \"{}\"".format(re.escape(message))
+    command = "git add . && git commit -am \"{}\"".format(message)
     c.run(command)
 
 
