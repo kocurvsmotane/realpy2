@@ -48,7 +48,8 @@ def heroku(c):
 
 @task
 def heroku_test(c):
-    c.run("heroku run nosetests -v")
+    with c.prefix("source env/bin/activate"):
+        c.run("/snap/bin/heroku run nosetests -v")
 
 
 @task
@@ -65,6 +66,12 @@ def deploy(c):
     commit(c)
     heroku(c)
     heroku_test(c)
+
+
+@task
+def rollback(c):
+    with c.prefix("source env/bin/activate"):
+        c.run("/snap/bin/heroku rollback", pty=True)
 
 
 # for debugging
