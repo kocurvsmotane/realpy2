@@ -7,7 +7,6 @@ from project.models import User
 
 __author__ = 'kot'
 
-
 TEST_DB = 'test.db'
 
 

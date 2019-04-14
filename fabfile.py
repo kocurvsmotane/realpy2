@@ -1,10 +1,9 @@
 import getpass
-import re
 
 from fabric import task
+from invocations.console import confirm
 from invoke import Responder
 from invoke.exceptions import Exit
-from invocations.console import confirm
 
 SSH_PASS = ''
 
@@ -77,5 +76,6 @@ def rollback(c):
 # for debugging
 if __name__ == "__main__":
     from invoke import Context, Config
+
     con = Context(config=Config())
     test(con)
