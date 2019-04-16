@@ -66,7 +66,7 @@ def register():
     form = RegisterForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            new_user = User(form.name.data, form.email.data, bcrypt.generate_password_hash(form.password.data))
+            new_user = User(form.name.data, form.email.data, bcrypt.generate_password_hash(form.password.data).decode())
             try:
                 db.session.add(new_user)
                 db.session.commit()
