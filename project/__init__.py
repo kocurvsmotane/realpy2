@@ -2,6 +2,7 @@ import datetime
 
 from flask import Flask, render_template, request
 from flask_bcrypt import Bcrypt
+from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
 __author__ = 'kot'
@@ -10,15 +11,21 @@ app = Flask(__name__)
 app.config.from_pyfile('_config.py')
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
+api_flask = Api(app)
 
 from project.users.views import users_blueprint
 from project.tasks.views import tasks_blueprint
 from project.api.views import api_blueprint
+from project.api.api_flask import TaskApi, TasksApi
 
 # register our blueprints
 app.register_blueprint(users_blueprint)
 app.register_blueprint(tasks_blueprint)
 app.register_blueprint(api_blueprint)
+
+# register flask-restful endpoint
+api_flask.add_resource(TasksApi, '/api/v2/tasks/')
+api_flask.add_resource(TaskApi, '/api/v2/tasks/<int:task_id>/')
 
 
 @app.errorhandler(404)

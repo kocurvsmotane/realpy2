@@ -110,7 +110,7 @@ venv.bak/
 *.db
 
 # config file
-_config.py
+#_config.py
 
 # nosetests covering report folder
 cover/

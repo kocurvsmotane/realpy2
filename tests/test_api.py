@@ -1,3 +1,4 @@
+import json
 import os
 import unittest
 from datetime import date
@@ -25,7 +26,7 @@ class APITests(unittest.TestCase):
         self.app = app.test_client()
         db.create_all()
 
-        self.assertEquals(app.debug, False)
+        self.assertEqual(app.debug, False)
 
     # executed after each test
     def tearDown(self):
@@ -61,6 +62,14 @@ class APITests(unittest.TestCase):
         )
         db.session.commit()
 
+    # helper functions
+
+    def login(self, name, password):
+        return self.app.post('/', data=dict(name=name, password=password), follow_redirects=True)
+
+    def register(self, name, email, password, confirm):
+        return self.app.post('register/', data=dict(name=name, email=email, password=password, confirm=confirm), follow_redirects=True)
+
     ###############
     #### tests ####
     ###############
@@ -75,18 +84,39 @@ class APITests(unittest.TestCase):
 
     def test_resource_endpoint_returns_correct_data(self):
         self.add_tasks()
-        response = self.app.get('api/v1/tasks/2', follow_redirects=True)
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.mimetype, 'application/json')
+        response = self.app.get('api/v1/tasks/2/', follow_redirects=True)
+        self.assertEquals(200, response.status_code)
+        self.assertEquals('application/json', response.mimetype)
         self.assertIn(b'Purchase Real Python', response.data)
         self.assertNotIn(b'Run around in circles', response.data)
 
     def test_invalid_resource_endpoint_returns_error(self):
         self.add_tasks()
-        response = self.app.get('api/v1/tasks/209', follow_redirects=True)
-        self.assertEquals(response.status_code, 404)
-        self.assertEquals(response.mimetype, 'application/json')
+        response = self.app.get('api/v1/tasks/209/', follow_redirects=True)
+        self.assertEquals(404, response.status_code)
+        self.assertEquals('application/json', response.mimetype)
         self.assertIn(b'Element does not exist', response.data)
+
+    def test_post_new_task(self):
+        task = {
+            'name': "Task for successful adding", 'due_date': date(2019, 5, 1), 'priority': 1, 'status': 1
+        }
+        self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        self.login('Michael', 'python')
+        response = self.app.post('api/v2/tasks/', follow_redirects=True, data=task)
+        self.assertEqual(200, response.status_code)
+        response = self.app.get('api/v2/tasks/', follow_redirects=True)
+        resp_data = json.loads(response.data)[0]
+        self.assertIn("Task for successful adding", resp_data['task_name'])
+
+    def test_post_unauthorized(self):
+        task = {
+            'name': "Task for test", 'due_date': date(2019, 5, 1), 'priority': 1, 'status': 1
+        }
+        response = self.app.post('api/v2/tasks/', follow_redirects=True, data=task)
+        self.assertEqual(401, response.status_code)
+        response = self.app.get('api/v2/tasks/', follow_redirects=True)
+        self.assertEqual(0, len(json.loads(response.data)))
 
 
 if __name__ == "__main__":
