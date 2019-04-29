@@ -7,8 +7,6 @@ from project.models import User
 
 TEST_DB = 'test.db'
 
-__author__ = 'kot'
-
 
 class UsersTests(unittest.TestCase):
 

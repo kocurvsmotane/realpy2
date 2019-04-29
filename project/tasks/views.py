@@ -7,8 +7,6 @@ from project.models import Task
 from project import db
 from project.tasks.forms import AddTaskForm
 
-__author__ = 'kot'
-
 tasks_blueprint = Blueprint('tasks', __name__)
 
 

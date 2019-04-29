@@ -3,8 +3,6 @@ import sqlite3
 from project._config import DATABASE_PATH
 from project import db
 
-__author__ = 'kot'
-
 with sqlite3.connect(DATABASE_PATH) as conn:
     c = conn.cursor()
 

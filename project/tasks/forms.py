@@ -2,8 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, IntegerField, SelectField
 from wtforms.validators import DataRequired
 
-__author__ = 'kot'
-
 
 class AddTaskForm(FlaskForm):
     task_id = IntegerField()

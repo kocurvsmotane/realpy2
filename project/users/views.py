@@ -8,8 +8,6 @@ from project.users.forms import LoginForm, RegisterForm
 
 from project import db, bcrypt
 
-__author__ = 'kot'
-
 users_blueprint = Blueprint('users', __name__)
 
 

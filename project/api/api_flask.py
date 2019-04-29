@@ -5,8 +5,6 @@ from datetime import datetime
 from project import db
 from project.models import Task
 
-__author__ = 'kot'
-
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=str, required=True)
 parser.add_argument('due_date', type=lambda x: datetime.strptime(x, '%Y-%m-%d'), required=True)

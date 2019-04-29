@@ -8,8 +8,6 @@ from project.models import Task, User
 
 TEST_DB = 'test.db'
 
-__author__ = 'kot'
-
 
 class TasksTests(unittest.TestCase):
 

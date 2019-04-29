@@ -2,8 +2,6 @@ import datetime
 
 from project import db
 
-__author__ = 'kot'
-
 
 class Task(db.Model):
     __tablename__ = 'tasks'

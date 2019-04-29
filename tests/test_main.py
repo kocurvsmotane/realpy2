@@ -5,8 +5,6 @@ from project import app, db
 from project._config import basedir
 from project.models import User
 
-__author__ = 'kot'
-
 TEST_DB = 'test.db'
 
 
