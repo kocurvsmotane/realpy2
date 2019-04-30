@@ -1,11 +1,15 @@
 language:
-  - python
-
+- python
 python:
-  - "3.6"
-
+- '3.6'
 install:
-  - pip install -r requirements.txt
-
+- pip install -r requirements.txt
 script:
-  - nosetests
+- nosetests
+deploy:
+  provider: heroku
+  api_key:
+    secure: cWB9kBOSfoJLHGC4nlSqXo3m/RvxXcuVDgl5nJipdVgbMdqCJNYDKqUG4rIOSaBFjNxCKxu0ITh+ch8wzY4OggXmp1RqRV6meLJ+zP4N6/G6/BHzaPAV2l+0P5eIDV5pwH940E1psrlWqtAU60vEvGrs9QHPzZL9BM9VCZqoB5UGsGNo+ccmv6v58QZoL6whE3BQJuTKA6FOfNmmvB2Rpla3gWd1MyzM0Xp86gFqTPlbsvqMLyVJSQzjcMhs8me+lEyM8g8AMF7NkRt2rDBRwmzLKqwlPuaSswdEkDEV1X47WJmUny4cHrFPXSOaZXBeUYoXuWPq0zdvDeMw94JCmxw+/dNJdRCViIhciiRel/XDGJ+AdrQOj54rq8ABHK6p/JIHI9dPmjxrKVVOyAoYvA3sASiKgTKi1VRcZKcBZ8AVej2PcIamVpWicmTKIPG+PcxAF3Ff6aUox+oL0boT6vsLBWMMOwTTDWqN+d3q0QuLJsrV5hY3O4QoZXbedxFG9dSKXydo8vYK3qULbyq8/rV+xKsnfQwU7jF6slm8qnkmEPpS0U0ObAe58bjuDib5GJzQdlgZv2whWZwS6hkGpwUZCxbsibnMIK9ttCS9NcUf5WhanVRUfnEUUqgpUoGiXg78GGa+NIwQQNawWmjybnts9JkNl0nxfIZzQea33VE=
+  app: obscure-thicket-45673
+  on:
+    repo: kocurvsmotane/realpy2
