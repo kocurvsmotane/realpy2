@@ -32,7 +32,9 @@ def commit(c):
 
 @task
 def push(c):
-    c.run("git push origin master", pty=True, watchers=[get_ssh_pass_resp()])
+    c.run("git branch")
+    branch = input("Branch for push:") or "master"
+    c.run(f"git push origin {branch}", pty=True, watchers=[get_ssh_pass_resp()])
 
 
 @task
